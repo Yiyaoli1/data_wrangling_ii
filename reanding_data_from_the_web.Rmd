@@ -99,3 +99,17 @@ brfss_df =
   content("parsed")
 ```
 
+## Some data is not so nice
+
+let look at Pokemon
+
+```{r}
+pokemon_df = 
+  GET("https://pokeapi.co/api/v2/pokemon/ditto") %>% 
+  content
+  
+pokemon_df$name
+pokemon_df$height
+pokemon_df$abilities
+```
+

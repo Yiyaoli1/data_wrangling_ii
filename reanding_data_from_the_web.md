@@ -170,3 +170,58 @@ brfss_df =
     ## )
 
     ## See spec(...) for full column specifications.
+
+## Some data is not so nice
+
+let look at Pokemon
+
+``` r
+pokemon_df = 
+  GET("https://pokeapi.co/api/v2/pokemon/ditto") %>% 
+  content
+  
+pokemon_df$name
+```
+
+    ## [1] "ditto"
+
+``` r
+pokemon_df$height
+```
+
+    ## [1] 3
+
+``` r
+pokemon_df$abilities
+```
+
+    ## [[1]]
+    ## [[1]]$ability
+    ## [[1]]$ability$name
+    ## [1] "limber"
+    ## 
+    ## [[1]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/7/"
+    ## 
+    ## 
+    ## [[1]]$is_hidden
+    ## [1] FALSE
+    ## 
+    ## [[1]]$slot
+    ## [1] 1
+    ## 
+    ## 
+    ## [[2]]
+    ## [[2]]$ability
+    ## [[2]]$ability$name
+    ## [1] "imposter"
+    ## 
+    ## [[2]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/150/"
+    ## 
+    ## 
+    ## [[2]]$is_hidden
+    ## [1] TRUE
+    ## 
+    ## [[2]]$slot
+    ## [1] 3
