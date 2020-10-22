@@ -88,3 +88,14 @@ nyc_water =
   as_tibble()
 ```
 
+##BRFSS
+
+same process, different data
+
+```{r}
+brfss_df = 
+  GET("https://chronicdata.cdc.gov/resource/acme-vg9e.csv",
+      query = list("$limit" = 5000)) %>% 
+  content("parsed")
+```
+
