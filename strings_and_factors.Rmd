@@ -1,0 +1,112 @@
+---
+title: "strings and factors"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+library(rvest)
+library(p8105.datasets)
+```
+
+```{r}
+string_vec = c("my", "name", "is", "jeff")
+
+str_detect(string_vec, "jeff")
+str_replace(string_vec, "jeff" ,"Jeff")
+```
+
+detect the beginning and end
+
+```{r}
+string_vec = c(
+  "i think we all rule for participating",
+  "i think i have been caught",
+  "i think this will be quite fun actually",
+  "it will be fun, i think"
+  )
+
+str_detect(string_vec, "^i think")
+str_detect(string_vec, "i think$")
+```
+
+
+```{r}
+string_vec = c(
+  "Y'all remember Pres. HW Bush?",
+  "I saw a green bush",
+  "BBQ and Bushwalking at Molonglo Gorge",
+  "BUSH -- LIVE IN CONCERT!!"
+  )
+
+str_detect(string_vec,"[Bb]ush")
+```
+
+detect multiple characters at the same time
+
+```{r}
+string_vec = c(
+  '7th inning stretch',
+  '1st half soon to begin. Texas won the toss.',
+  'she is 5 feet 4 inches tall',
+  '3AM - cant sleep :('
+  )
+
+str_detect(string_vec, "^[0-9][a-zA-Z]")
+```
+
+```{r}
+string_vec = c(
+  'Its 7:11 in the evening',
+  'want to go to 7-11?',
+  'my flight is AA711',
+  'NetBios: scanning ip 203.167.114.66'
+  )
+
+str_detect(string_vec, "7.11")
+```
+
+
+what to do when the detected item has special meaning? add\\
+
+```{r}
+string_vec = c(
+  'The CI is [2, 5]',
+  ':-]',
+  ':-[',
+  'I found the answer on pages [6-7]'
+  )
+
+str_detect(string_vec, "\\[")
+```
+
+## Factors
+
+```{r}
+factor_vex = factor(c("male", "male", "female", "female"))
+factor_vex
+as.numeric(factor_vex)
+```
+
+what happens if I relevel
+
+```{r}
+factor_vex = fct_relevel(factor_vex, "male")
+factor_vex
+as.numeric(factor_vex)
+```
+
+## NSDUH
+
+```{r}
+nsduh_url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+
+table_marj = 
+  read_html(nsduh_url) %>% 
+  html_nodes(css = "table") %>% 
+  first() %>%
+  html_table() %>%
+  slice(-1) %>%
+  as_tibble()
+```
+
