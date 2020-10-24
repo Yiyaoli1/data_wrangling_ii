@@ -5,14 +5,14 @@ strings and factors
 library(tidyverse)
 ```
 
-    ## -- Attaching packages -----------------
+    ## -- Attaching packages ------------------- tidyverse 1.3.0 --
 
     ## √ ggplot2 3.3.2     √ purrr   0.3.4
     ## √ tibble  3.0.3     √ dplyr   1.0.2
     ## √ tidyr   1.1.2     √ stringr 1.4.0
     ## √ readr   1.3.1     √ forcats 0.5.0
 
-    ## -- Conflicts --------------------------
+    ## -- Conflicts ---------------------- tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
@@ -160,7 +160,7 @@ as.numeric(factor_vex)
 
     ## [1] 1 1 2 2
 
-## NSDUH
+## NSDUH–strings
 
 ``` r
 nsduh_url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
@@ -172,4 +172,22 @@ table_marj =
   html_table() %>%
   slice(-1) %>%
   as_tibble()
+```
+
+``` r
+data_marj =
+  table_marj %>%
+  select(-contains("P value")) %>% 
+  pivot_longer(
+    -State,
+    names_to = "age_year",
+    values_to = "percentage"
+  ) %>% 
+  separate(age_year, into = c("age", "year"), sep = "\\(") %>% 
+  mutate(
+    year = str_replace(year, "\\)", ""),
+    percentage = str_replace(percentage, "[a-c]", ""),
+    percentage = as.numeric(percentage)
+  ) %>% 
+  filter(!(State %in% c("Total U.S.", "Midwest", "Northeast", "West", "South")))
 ```
